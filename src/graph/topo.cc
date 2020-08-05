@@ -317,10 +317,9 @@ ncclResult_t ncclTopoAddPci(struct ncclXmlNode* xmlPci, struct ncclTopoSystem* s
   NCCLCHECK(busIdToInt64(str, &busId));
 
   struct ncclTopoNode* node = NULL;
-  if (type == GPU) {
-    struct ncclXmlNode* xmlGpu;
-    NCCLCHECK(xmlGetSub(xmlPci, "gpu", &xmlGpu));
-    if (xmlGpu == NULL) return ncclSuccess;
+  struct ncclXmlNode* xmlGpu = NULL;
+  NCCLCHECK(xmlGetSub(xmlPci, "gpu", &xmlGpu));
+  if (xmlGpu != NULL) {
     int index;
     NCCLCHECK(xmlGetAttrIndex(xmlGpu, "rank", &index));
     if (index == -1) return ncclSuccess;
